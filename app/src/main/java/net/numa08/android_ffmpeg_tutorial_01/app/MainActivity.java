@@ -2,6 +2,7 @@ package net.numa08.android_ffmpeg_tutorial_01.app;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,7 @@ import java.io.File;
 
 
 public class MainActivity extends Activity {
+    public static final String TARGET_MOVIE_FILE = "1.mp4";
     public static final String FRAME_DUMP_DIR = "android-ffmpeg-tutorial-01";
     public static final int MAX_FRAME_OF_NUM = 20;
     @Override
@@ -21,6 +23,11 @@ public class MainActivity extends Activity {
         final File dumpDir = new File(getFilesDir().getPath() + File.separator + MainActivity.FRAME_DUMP_DIR);
         if (!dumpDir.exists()) {
             dumpDir.mkdir();
+        }
+        final AssetFileManager assets = new AssetFileManager(getApplicationContext());
+        final boolean success = assets.copy(MainActivity.TARGET_MOVIE_FILE, dumpDir.getPath());
+        if (!success) {
+            Log.e("FFMpeg Tutorial", "cannot copy target file");
         }
     }
 
