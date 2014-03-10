@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 
 public class MainActivity extends Activity {
@@ -16,5 +17,14 @@ public class MainActivity extends Activity {
     }
 
     public void clickStartButton(View view) {
+        final EditText numberEditText = (EditText)findViewById(R.id.editText);
+        int numOfFrame;
+        try {
+            final String numOfText = numberEditText.getText().toString();
+            numOfFrame = Integer.valueOf(numOfText);
+        } catch (NumberFormatException e){
+            e.printStackTrace();
+            numOfFrame = 5;
+        }
     }
 }
