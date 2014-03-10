@@ -9,7 +9,7 @@ import android.widget.EditText;
 
 
 public class MainActivity extends Activity {
-
+    public static final int MAX_FRAME_OF_NUM = 20;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +25,10 @@ public class MainActivity extends Activity {
         } catch (NumberFormatException e){
             e.printStackTrace();
             numOfFrame = 5;
+        }
+
+        if (numOfFrame > MainActivity.MAX_FRAME_OF_NUM) {
+            numOfFrame = MainActivity.MAX_FRAME_OF_NUM;
         }
     }
 }
