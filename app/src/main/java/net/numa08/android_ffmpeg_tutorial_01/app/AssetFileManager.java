@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
 
+import org.apache.commons.io.IOUtils;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -27,40 +29,16 @@ public class AssetFileManager {
             in = assets.open(fromPath);
             final File outFIle = new File(toPath, fromPath);
             out = new FileOutputStream(outFIle);
-            copyFile(in, out);
+            IOUtils.copy(in, out);
+            in.close();
+            in = null;
+            out.flush();
+            out.close();
         } catch (IOException e) {
             e.printStackTrace();
             Log.e("FFMpeg-Tutorial","failed copy file from assets");
             return false;
-        } finally {
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                in = null;
-            }
-
-            if (out != null) {
-                try {
-                    out.flush();
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                out = null;
-            }
         }
         return true;
-    }
-
-    private void copyFile(InputStream in, OutputStream out) throws IOException {
-        byte[] buffer = new byte[1024 * 16];
-        int read = 0;
-        while (read != -1) {
-            read = in.read(buffer);
-            out.write(buffer, 0, read);
-        }
     }
 }
